@@ -34,4 +34,6 @@ A data pipeline to collect and process food ingredient data for allergy detectio
 3. **Index**: Run `db/init_vector.py` to sync SQL data to the vector store.
 
 ## Output
-The project produces `data/food_data.db` (SQL) and `data/chroma_db` (Vector), which can be moved into any AI Agent project for retrieval.
+- `data/food_data.db`: Full SQLite database (ignored by git).
+- `data/chroma_db`: Vector database for AI retrieval (ignored by git).
+- `data/food_products_summary.csv`: Exported summary of products and detected allergens (available in repo).

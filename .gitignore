@@ -13,6 +13,9 @@ data/temp_cnf/
 data/*.xlsx
 cnf-fcen-csv/
 
+# Allow exported summary CSV
+!data/food_products_summary.csv
+
 # IDE
 .cursor/
 .vscode/
