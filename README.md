@@ -30,9 +30,19 @@ A data pipeline to collect and process food ingredient data for allergy detectio
 
 ## Workflow
 1. **Fetch**: Run scripts in `scripts/` to populate `food_data.db`.
-2. **Enrich**: Run `db/enrich_allergens.py` to tag allergens across English, French, Chinese, and Japanese.
-3. **Index**: Run `db/init_vector.py` to sync SQL data to the vector store.
-4. **Export**: Run `db/export_csv.py` to generate a shareable CSV summary.
+2. **Clean**: 
+   - `db/advanced_cleaning.py`: Normalizes brand names (e.g., merging "李錦記" and "Lee Kum Kee") and sanitizes ingredient text.
+   - `db/clean_data.py`: Deduplicates products by barcode and merges fragmented data from different sources (Data Coalescence).
+3. **Enrich**: Run `db/enrich_allergens.py` to tag allergens across English, French, Chinese, and Japanese.
+4. **Index**: Run `db/init_vector.py` to sync SQL data to the vector store.
+5. **Export**: Run `db/export_csv.py` to generate a shareable CSV summary.
+
+## Data Quality Strategy
+To ensure the reliability of the knowledge base for AI Agent reasoning, the pipeline implements a multi-stage refinement process:
+- **Normalizing Entities**: Uses regex-based brand mapping to resolve entity ambiguity across multi-lingual sources.
+- **Data Coalescence**: Instead of simple deletion, the pipeline merges duplicate records by prioritizing the most complete ingredient lists while preserving unique metadata (images, external tags) from secondary sources.
+- **Heuristic Filtering**: Automatically identifies and strips "garbage" text (e.g., "See packaging", "N/A") from ingredient lists to prevent RAG hallucination.
+- **Conflict Resolution**: Implements a "Safety-First" policy where confirmed allergens take precedence over "may contain" traces during merging.
 
 ## Output
 - `data/food_data.db`: Full SQLite database (local only).
