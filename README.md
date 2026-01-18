@@ -10,7 +10,7 @@ A data pipeline to collect and process food ingredient data for allergy detectio
 
 ## Structure
 - `scripts/`: Python scripts for fetching data from each API/source.
-- `db/`: Database setup, SQL schema, and allergen enrichment logic.
+- `db/`: Database setup, SQL schema, allergen enrichment, and export logic.
 - `data/`: Local storage for SQLite and ChromaDB (ignored by git).
 - `run_pipeline.py`: Main entry point to run the full collection process.
 
@@ -32,8 +32,9 @@ A data pipeline to collect and process food ingredient data for allergy detectio
 1. **Fetch**: Run scripts in `scripts/` to populate `food_data.db`.
 2. **Enrich**: Run `db/enrich_allergens.py` to tag allergens across English, French, Chinese, and Japanese.
 3. **Index**: Run `db/init_vector.py` to sync SQL data to the vector store.
+4. **Export**: Run `db/export_csv.py` to generate a shareable CSV summary.
 
 ## Output
-- `data/food_data.db`: Full SQLite database (ignored by git).
-- `data/chroma_db`: Vector database for AI retrieval (ignored by git).
-- `data/food_products_summary.csv`: Exported summary of products and detected allergens (available in repo).
+- `data/food_data.db`: Full SQLite database (local only).
+- `data/chroma_db`: Vector database for AI retrieval (local only).
+- `data/food_products_summary.csv`: Exported summary of products and detected allergens (tracked in git).
