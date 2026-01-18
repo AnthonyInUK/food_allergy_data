@@ -1,0 +1,8 @@
+requests
+python-dotenv
+pandas
+chromadb
+sentence-transformers
+pytesseract
+Pillow
+
